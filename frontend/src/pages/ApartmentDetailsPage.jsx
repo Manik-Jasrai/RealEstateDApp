@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import ApartmentDetails from '../components/ApartmentDetails';
+import ApartmentDetails from '../components/ApartmentPage/ApartmentDetails';
 
 const apartments = [
   {
@@ -14,7 +14,7 @@ const apartments = [
     image: '/bukit-batu-indah.jpg'
   },
   {
-      id: 1,
+      id: 7,
       name: 'Bukit Batu Indah Permai',
       location: 'Kotalama',
       size: '100m²',
@@ -24,7 +24,7 @@ const apartments = [
       image: '/bukit-batu-indah.jpg'
     },
     {
-      id: 1,
+      id: 8,
       name: 'Bukit Batu Indah Permai',
       location: 'Kotalama',
       size: '100m²',
@@ -34,7 +34,7 @@ const apartments = [
       image: '/bukit-batu-indah.jpg'
     },
     {
-      id: 1,
+      id: 9,
       name: 'Bukit Batu Indah Permai',
       location: 'Kotalama',
       size: '100m²',
@@ -77,7 +77,6 @@ const apartments = [
 
 const ApartmentDetailsPage = () => {
   const { apartmentId } = useParams();
-
   const apartment = apartments.find(a => a.id === parseInt(apartmentId));
 
   return (

@@ -1,7 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { RiSearchLine } from 'react-icons/ri';
 import { IoLocationSharp } from 'react-icons/io5';
-import { useNavigate } from "react-router-dom";
 import ApartmentCard from '../components/ApartmentCard';
 
 const apartments = [
@@ -77,7 +76,20 @@ const apartments = [
     }
 ];
   
-const locations = ['Kotalama', 'Kayu Tangan', 'Karangploso', 'Dinoyo'];
+const locations = ['Kotalama', 'Kayu Tangan', 'Karangploso', 'Dinoyo', 'Mumbai'];
+
+const EmptyState = ({ message }) => (
+  <div className="col-span-full flex flex-col items-center justify-center py-12 px-4">
+      <div className="bg-white rounded-lg shadow-sm p-8 text-center max-w-md">
+          <div className="text-gray-400 mb-2">
+              <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+              </svg>
+          </div>
+          <p className="text-gray-600 text-lg">{message}</p>
+      </div>
+  </div>
+);
 
 const ApartmentsPage = () => {
     const [searchText, setSearchText] = useState('');
@@ -91,7 +103,7 @@ const ApartmentsPage = () => {
     },[selectedLocation]);
 
     return (
-      <div className="bg-gray-100 py-10">
+      <div className="min-h-screen bg-gray-100 py-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center mb-6">
             <div className="relative flex-1">
@@ -120,9 +132,15 @@ const ApartmentsPage = () => {
           </div>
   
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {filteredApartments.map(apartment => (  
-            <ApartmentCard key={apartment.id} apartment={apartment} />
-            ))}
+            {!selectedLocation ? (
+                <EmptyState message="Please select a location to view available apartments" />
+            ) : filteredApartments.length === 0 ? (
+                <EmptyState message="No apartments available in this location" />
+            ) : (
+                filteredApartments.map(apartment => (
+                    <ApartmentCard key={apartment.id} apartment={apartment} />
+                ))
+            )}
           </div>
         </div>
       </div>

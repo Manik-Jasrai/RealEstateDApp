@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const ApartmentCard = ({ apartment }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <img src={apartment.image} alt={apartment.name} className="w-full h-48 object-cover" />
+      <img src={'/a.jpg'} alt={apartment.name} className="w-full h-48 object-cover" />
       <div className="p-4">
         <h3 className="text-lg font-medium text-gray-800">{apartment.name}</h3>
         <p className="text-gray-600 text-sm">{apartment.location}</p>
