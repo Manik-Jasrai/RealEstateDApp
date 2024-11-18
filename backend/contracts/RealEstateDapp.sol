@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity >=0.8.10;
-import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
+import '@openzeppelin/contracts/utils/ReentrancyGuard.sol';
 
 contract RealEstateDapp is ReentrancyGuard {
 
@@ -165,8 +165,8 @@ contract RealEstateDapp is ReentrancyGuard {
         return true;
     }
 
-    function calculatePrice(uint aptid, uint[] memory dates) internal view returns (uint) {
-        uint totalPrice = apartments[aptid].price * dates.length;
+    function calculatePrice(uint aptid, uint numNights) internal view returns (uint) {
+        uint totalPrice = apartments[aptid].price * numNights;
         return totalPrice + platformFee;  // Add constant platform fee
     }
 
