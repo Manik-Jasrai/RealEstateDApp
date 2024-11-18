@@ -6,6 +6,7 @@ import ApartmentDetailsPage from './pages/ApartmentDetailsPage'
 import NewApartmentPage from './pages/NewApartmentPage'
 import UpdateApartmentPage from './pages/UpdateApartmentPage'
 import BookingHistory from './pages/BookingListPage'
+import ApartmentOwnerDashboard from './pages/Ownerdashboard'
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path='/apartments/:apartmentId/update' Component={UpdateApartmentPage} />
         <Route path='/apartments/add' Component={NewApartmentPage}/>
         <Route path='/bookings' Component={BookingHistory}/>
+        <Route path='/dashboard' Component={ApartmentOwnerDashboard}/>
       </Routes>
     </Router>
     
