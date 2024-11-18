@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "blockchain": "yarn hardhat node",
     "deploy": "yarn hardhat run scripts/deploy.js --network localhost"
   },
@@ -13,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@openzeppelin/contracts": "^5.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "ethers": "^6.13.4",
     "express": "^4.21.1",
@@ -20,6 +23,7 @@
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
-    "hardhat": "^2.22.16"
+    "hardhat": "^2.22.16",
+    "nodemon": "^3.1.7"
   }
 }
