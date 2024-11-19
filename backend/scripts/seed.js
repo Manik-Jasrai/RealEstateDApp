@@ -28,7 +28,7 @@ async function main() {
         {
             name: "Luxury Downtown Loft",
             desc: "Modern loft in the heart of downtown with stunning city views",
-            loc: "123 Downtown Ave, Metropolis",
+            loc: "Metropolis",
             images: "ipfs://QmHash1,ipfs://QmHash2",
             rooms: 2,
             price: hre.ethers.parseEther("0.1") // 0.1 ETH per night

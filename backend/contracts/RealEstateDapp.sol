@@ -166,7 +166,7 @@ contract RealEstateDapp is ReentrancyGuard {
         return true;
     }
 
-    function calculatePrice(uint aptid, uint numNights) internal view returns (uint) {
+    function calculatePrice(uint aptid, uint numNights) public view returns (uint) {
         uint totalPrice = apartments[aptid].price * numNights;
         return totalPrice + platformFee;  // Add constant platform fee
     }
@@ -219,6 +219,31 @@ contract RealEstateDapp is ReentrancyGuard {
     function getBookings(uint aptid) public view returns (BookingStruct[] memory) {
         return bookings[aptid]; 
     }
+    
+    function getAllBookings() public view returns (BookingStruct[] memory _allBookings) {
+    // First, calculate the total number of bookings across all apartments
+    uint256 totalBookingsCount;
+    for(uint i = 1; i < totalApts; i++) {
+        totalBookingsCount += bookings[i].length;
+    }
+
+    // Create an array to hold all bookings
+    _allBookings = new BookingStruct[](totalBookingsCount);
+    
+    // Counter to track the current index in _allBookings
+    uint256 currentIndex = 0;
+    
+    // Iterate through all apartments and their bookings
+    for(uint i = 1; i < totalApts; i++) {
+        // Copy bookings for each apartment
+        for(uint j = 0; j < bookings[i].length; j++) {
+            _allBookings[currentIndex] = bookings[i][j];
+            currentIndex++;
+        }
+    }
+    
+    return _allBookings;
+}
 
     function getUnavailableDates(uint aptid) public view returns (uint[] memory) {
         return bookedDates[aptid]; 
