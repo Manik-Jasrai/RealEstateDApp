@@ -49,7 +49,7 @@ router.get('/user/:address', async (req, res) => {
 });
 
 // Get unavailable dates for an apartment
-router.get('/unavailable-dates/:aptid', async (req, res) => {
+router.get('/unavl/:aptid', async (req, res) => {
     try {
         const contract = await getContract();
         const aptid = Number(req.params.aptid);
