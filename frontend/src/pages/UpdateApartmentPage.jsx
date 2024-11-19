@@ -1,34 +1,78 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import FormApartment from '../components/FormApartment';
+import axios from '../api/axios';
+
+const DEFAULT_WALLET_ADDRESS = '0x70997970C51812dc3A010C7d01b50e0d17dc79C8';
 
 const UpdateApartmentPage = () => {
+  const [param,setParam] = useState(useParams());
   const [formData, setFormData] = useState({
-    id: "123",
-    title: "Luxury Beachfront Apartment",
-    description: "Beautiful 2-bedroom apartment with ocean views",
-    price: "250",
-    bedrooms: "2",
-    bathrooms: "2",
-    size: "1200",
-    address: "123 Ocean Drive, Miami Beach, FL",
-    propertyType: "apartment",
-    amenities: {
-      wifi: true,
-      parking: true,
-      pool: true,
-      gym: false,
-      ac: true,
-      heating: true,
-      laundry: true,
-      security: true,
-      pets: false,
-      furnished: true
-    },
-    images: [
-      "/api/placeholder/400/300",
-      "/api/placeholder/400/300"
-    ]
+    images: '',
+    name: '',
+    desc: '',
+    loc: '',
+    rooms: 0,
+    price: 0
   });
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Fetch apartment details when component mounts
+  useEffect(() => {
+    const fetchApartmentDetails = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(`/apartment/${param.apartmentId}`);
+        const apt = response.data
+        setFormData({
+          images : apt.images,
+          name : apt.name,
+          desc : apt.description,
+          loc : apt.location,
+          rooms : apt.rooms,
+          price : apt.price
+        });
+        console.log(formData);
+      } catch (error) {
+        console.error('Error fetching apartment details:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchApartmentDetails();
+  }, [param.apartmentId]);
+
+  // Handle form submission for updating apartment
+  const handleUpdateApartment = async (data) => {
+    try {
+      setIsSubmitting(true);
+      const response = await axios.put(`/apartment/${param.apartmentId}`,
+         {...data, owner : DEFAULT_WALLET_ADDRESS}
+      );
+      // Handle successful update (e.g., show success message, redirect)
+      console.log('Apartment updated successfully', response.data);
+      // Example: navigate to apartment details page
+      // navigate(`/apartments/${id}`);
+    } catch (error) {
+      console.error('Error updating apartment:', error);
+      // Optionally, show an error message to the user
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Show loading state while fetching initial data
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-xl text-gray-600">Loading apartment details...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
@@ -38,8 +82,10 @@ const UpdateApartmentPage = () => {
           <p className="mt-2 text-lg text-gray-600">Make changes to your property listing</p>
         </div>
         <FormApartment 
-            formData={formData}
-            setFormData={setFormData}
+          formData={formData}
+          setFormData={setFormData}
+          onSubmit={handleUpdateApartment}
+          isLoading={isSubmitting}
         />
       </div>
     </div>

@@ -37,13 +37,23 @@ router.get('/locations', async (req, res) => {
 
 // GET apartment by ID
 router.get('/:id', async (req, res) => {
-    const contract = await getContract();
-    const apartments = await getAllApartments(contract);
-    const filteredApartments = apartments.filter(apt => {
-        apt.id == req.params.id
-    })
-    res.json(filteredApartments);
+    try {
+        const contract = await getContract();
+        const apartments = await getAllApartments(contract);
+
+        const apartment = apartments.find(apt => apt.id.localeCompare(req.params.id) === 0);
+
+        if (apartment) {
+            res.json(apartment); // Send the single matched apartment
+        } else {
+            res.status(404).send({ error: 'Apartment not found' }); // Handle not found case
+        }
+    } catch (error) {
+        console.error('Error fetching apartment:', error);
+        res.status(500).send({ error: 'Internal Server Error' });
+    }
 });
+
 
 // GET apartments by owner
 router.get('/owner/:address', async (req, res) => {
@@ -89,9 +99,12 @@ router.post('/', async (req, res) => {
 });
 
 // PUT Apartment
-router.put('/', async (req, res) => {
-    // TODO: Fix owner logic
-    const {id, name, desc, loc, images, rooms, price, owner } = req.body;
+router.put('/:id', async (req, res) => {
+    try {
+
+    
+    const {id} = req.params;
+    const { name, desc, loc, images, rooms, price, owner } = req.body;
     if (!id || !name || !desc || !loc || !images || !rooms || !price) res.status(400).json({ message : "Invalid Body" });
 
     const contract = await getContract();
@@ -110,6 +123,9 @@ router.put('/', async (req, res) => {
         message: 'Apartment updated successfully', 
         transactionHash: response.transactionHash 
     });
+    } catch (err) {
+        res.status(500).send({ error: err });
+    }
 });
 
 router.delete('/:id', async (req, res) => {
