@@ -2,6 +2,7 @@
 
 pragma solidity >=0.8.10;
 import '@openzeppelin/contracts/utils/ReentrancyGuard.sol';
+import 'hardhat/console.sol';
 
 contract RealEstateDapp is ReentrancyGuard {
 
@@ -53,10 +54,10 @@ contract RealEstateDapp is ReentrancyGuard {
 
     address private Owner;
     uint private totalApts = 0;
-    uint8 platformFee;
+    uint platformFee;
     uint private constant RATING_PRECISION = 100;
 
-    constructor(uint8 _platformFee){ 
+    constructor(uint _platformFee){ 
         Owner = msg.sender;
         platformFee = _platformFee;
     }
@@ -198,12 +199,12 @@ contract RealEstateDapp is ReentrancyGuard {
         booking.total = total;
 
         // Split payment
-        uint platformCut = total * platformFee / 100;
-        payTo(apartments[aptid].owner, total - platformCut);
-        payTo(Owner, platformCut);
+        payTo(apartments[aptid].owner, total - platformFee);
+        payTo(Owner, platformFee);
 
         // Update mappings
         bookings[aptid].push(booking);
+        hasBooked[msg.sender][aptid] = true;
         for (uint date = checkInDate; date < checkOutDate; date += 1 days) {
             isDateBooked[aptid][date] = true;
             bookedDates[aptid].push(date);
@@ -225,19 +226,6 @@ contract RealEstateDapp is ReentrancyGuard {
 
     function tenantBooked(uint aptid) public view returns (bool){
         return hasBooked[msg.sender][aptid];
-    }
-
-    function checkIn(uint aptid, uint bookingid) public {
-        require(hasBooked[msg.sender][aptid], 'You must book before you can check-in');  
-        require(!bookings[aptid][bookingid].checkedIn, 'You can only can check in once');
-        bookings[aptid][bookingid].checkedIn = true;
-    }
-
-    function checkOut(uint aptid, uint bookingid) public {
-        require(hasBooked[msg.sender][aptid], 'You must book before you can check-out');  
-        require(bookings[aptid][bookingid].checkedIn, 'You must check-in before you can check-out');
-        require(!bookings[aptid][bookingid].checkedOut, 'You can only can check out once');
-        bookings[aptid][bookingid].checkedOut = true;
     }
 
     function addReview(uint aptid, string memory text, uint8 rating) public {

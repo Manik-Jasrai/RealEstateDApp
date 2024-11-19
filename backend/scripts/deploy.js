@@ -35,7 +35,7 @@ async function main() {
     const ContractFactory = await hre.ethers.getContractFactory("RealEstateDapp");
 
     // Deploy the contract
-    const contract = await ContractFactory.deploy(5);
+    const contract = await ContractFactory.deploy(hre.ethers.parseEther("0.05"));
 
     // Wait for deployment to finish
     await contract.waitForDeployment();

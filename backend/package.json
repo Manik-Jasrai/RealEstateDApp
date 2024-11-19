@@ -8,7 +8,8 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "blockchain": "yarn hardhat node",
-    "deploy": "yarn hardhat run scripts/deploy.js --network localhost"
+    "deploy": "yarn hardhat run scripts/deploy.js --network localhost",
+    "seed": "yarn hardhat run scripts/seed.js"
   },
   "keywords": [],
   "author": "",
