@@ -28,7 +28,7 @@ async function main() {
         {
             name: "Luxury Downtown Loft",
             desc: "Modern loft in the heart of downtown with stunning city views",
-            loc: "Metropolis",
+            loc: "London",
             images: "ipfs://QmHash1,ipfs://QmHash2",
             rooms: 2,
             price: hre.ethers.parseEther("0.1") // 0.1 ETH per night
@@ -36,7 +36,7 @@ async function main() {
         {
             name: "Beachfront Villa",
             desc: "Spectacular oceanfront property with private beach access",
-            loc: "456 Beach Road, Coastal City",
+            loc: "Goa",
             images: "ipfs://QmHash3,ipfs://QmHash4",
             rooms: 4,
             price: hre.ethers.parseEther("0.2") // 0.2 ETH per night
@@ -44,7 +44,7 @@ async function main() {
         {
             name: "Mountain Cabin",
             desc: "Cozy cabin retreat with panoramic mountain views",
-            loc: "789 Mountain Path, Highland Springs",
+            loc: "Russia",
             images: "ipfs://QmHash5,ipfs://QmHash6",
             rooms: 3,
             price: hre.ethers.parseEther("0.15") // 0.15 ETH per night

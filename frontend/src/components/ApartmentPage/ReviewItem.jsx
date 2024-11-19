@@ -15,10 +15,10 @@ const ReviewItem = ({ review }) => (
           ))}
         </div>
         <span className="ml-2 text-gray-600 text-sm">
-          {new Date(review.date).toLocaleDateString()}
+          {new Date(review.timestamp).toLocaleDateString()}
         </span>
       </div>
-      <p className="text-gray-700">{review.comment}</p>
+      <p className="text-gray-700">{review.text}</p>
     </div>
   );
 

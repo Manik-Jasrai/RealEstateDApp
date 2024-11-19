@@ -7,7 +7,7 @@ const ReviewForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ rating, comment, date: new Date().toISOString() });
+    onSubmit({ rating, comment });
     setRating(0);
     setComment('');
   };
@@ -23,7 +23,7 @@ const ReviewForm = ({ onSubmit }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 mb-6">
       <h3 className="text-xl font-bold mb-4">Write a Review</h3>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="mb-4">
           <div className="flex items-center mb-2">
             {[1, 2, 3, 4, 5].map((star) => (

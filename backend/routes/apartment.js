@@ -27,6 +27,13 @@ router.get('/', async (req, res) => {
     const apartments = await getAllApartments(contract);
     res.json(apartments);
 });
+// GET all locations
+router.get('/locations', async (req, res) => {
+    const contract = await getContract();
+    const apartments = await getAllApartments(contract);
+    const locations = apartments.map(apartment => apartment.location);
+    res.json(locations);
+});
 
 // GET apartment by ID
 router.get('/:id', async (req, res) => {
