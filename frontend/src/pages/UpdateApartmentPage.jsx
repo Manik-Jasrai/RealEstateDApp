@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import FormApartment from '../components/FormApartment';
 import axios from '../api/axios';
-
-const DEFAULT_WALLET_ADDRESS = '0x70997970C51812dc3A010C7d01b50e0d17dc79C8';
+import { useAppKitAccount } from '@reown/appkit/react';
 
 const UpdateApartmentPage = () => {
+  const {address} = useAppKitAccount();
+
   const [param,setParam] = useState(useParams());
   const [formData, setFormData] = useState({
     images: '',
@@ -49,7 +50,7 @@ const UpdateApartmentPage = () => {
     try {
       setIsSubmitting(true);
       const response = await axios.put(`/apartment/${param.apartmentId}`,
-         {...data, owner : DEFAULT_WALLET_ADDRESS}
+         {...data, owner : address}
       );
       // Handle successful update (e.g., show success message, redirect)
       console.log('Apartment updated successfully', response.data);

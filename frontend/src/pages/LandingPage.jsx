@@ -7,9 +7,11 @@ import {
   HelpCircle,
   CheckCircle,
 } from "lucide-react";
+import { useAppKitAccount } from "@reown/appkit/react";
 
 const Landing = () => {
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const {address} = useAppKitAccount();
 
   const BlockchainBenefits = [
     {
@@ -62,6 +64,19 @@ const Landing = () => {
               className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg flex items-center">
               <HelpCircle className="mr-2" /> How It Works
             </button>
+            <Link
+              to="/bookings"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg">
+              View Bookings
+            </Link>
+            {address && address.toLowerCase() === "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266" ? (
+            <Link
+              to="/dashboard"
+              className="bg-green-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg"
+            >
+              View Dashboard
+            </Link>
+            ) : null}
           </div>
         </div>
 

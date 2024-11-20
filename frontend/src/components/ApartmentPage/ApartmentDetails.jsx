@@ -3,8 +3,10 @@ import ReviewForm from './ReviewForm';
 import ReviewList from './ReviewList'
 import React, { useState, useEffect } from 'react';
 import axios from '../../api/axios';
+import { useAppKitAccount } from '@reown/appkit/react';
 
 const ApartmentDetails = ({ apartment }) => {
+  const {address} = useAppKitAccount();
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -49,7 +51,7 @@ const ApartmentDetails = ({ apartment }) => {
       const response = await axios.post(`/review/${apartment.id}`, {
         rating : rating,
         text : comment,
-        address : "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+        address : address
       });
 
       // Assuming the backend returns the created review

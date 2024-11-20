@@ -59,9 +59,10 @@ router.get('/:id', async (req, res) => {
 router.get('/owner/:address', async (req, res) => {
     const contract = await getContract();
     const apartments = await getAllApartments(contract);
-    const filteredApartments = apartments.filter(apt => {
-        apt.owner.toLowerCase().includes(req.params.address.toLowerCase())
-    })
+    console.log(apartments)
+    const filteredApartments = apartments.filter(apt => 
+        apt.owner.toLowerCase() === req.params.address.toLowerCase()
+    );
     res.json(filteredApartments);
 });
 

@@ -9,13 +9,10 @@ const ApartmentCard = ({ apartment }) => {
         <p className="text-gray-600 text-sm">{apartment.location}</p>
         <div className="flex items-center mt-2">
           <span className="text-gray-600 text-sm">{apartment.size}</span>
-          <span className="text-gray-600 text-sm mx-2">|</span>
-          <span className="text-gray-600 text-sm">{apartment.bedrooms} Bedrooms</span>
-          <span className="text-gray-600 text-sm mx-2">|</span>
-          <span className="text-gray-600 text-sm">{apartment.bathrooms} Bathrooms</span>
+          <span className="text-gray-600 text-sm">{apartment.rooms} Bedrooms</span>
         </div>
         <div className="mt-4 flex justify-between items-center">
-          <span className="text-blue-500 font-medium">IDR {apartment.price.toLocaleString()}/yr</span>
+          <span className="text-blue-500 font-medium"> {apartment.price/1e18} ETH</span>
           <Link 
             to={`/apartments/${apartment.id}`}
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"

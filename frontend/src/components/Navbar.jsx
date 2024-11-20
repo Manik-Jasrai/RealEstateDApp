@@ -9,6 +9,7 @@ const Navbar = () => {
         <Link to="/" className="text-2xl font-bold text-gray-800">
           ChainHome
         </Link>
+        
         <ConnectButton/>
       </div>
     </nav>

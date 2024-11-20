@@ -6,21 +6,20 @@ import {
   Users,
   MapPin
 } from 'lucide-react';
+import { useAppKitAccount } from '@reown/appkit/react';
 
 const BookingHistory = () => {
   const [bookings, setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  // Default wallet address (can be replaced with actual user's address)
-  const DEFAULT_WALLET_ADDRESS = '0x70997970C51812dc3A010C7d01b50e0d17dc79C8';
+  const {address} = useAppKitAccount();
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
         setIsLoading(true);
-        const bookingsResponse = await axios.get(`/booking/user/${DEFAULT_WALLET_ADDRESS}`);
-
+        const bookingsResponse = await axios.get(`/booking/user/${address}`);
+        console.log(bookingsResponse)
         // Fetch apartment details for each booking
         const bookingsWithApartments = await Promise.all(
           bookingsResponse.data.map(async (booking) => {
@@ -57,7 +56,7 @@ const BookingHistory = () => {
     };
 
     fetchBookings();
-  }, []);
+  }, [address]);
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {

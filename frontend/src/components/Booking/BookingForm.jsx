@@ -1,6 +1,8 @@
+import { useAppKitAccount } from '@reown/appkit/react';
 import React, { useState } from 'react';
 
 const BookingForm = ({ apartment, selectedDates, onSubmit }) => {
+  const {address} = useAppKitAccount();
   const [guests, setGuests] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
@@ -20,7 +22,7 @@ const BookingForm = ({ apartment, selectedDates, onSubmit }) => {
 
     try {
       const bookingData = {
-        address: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8", // You might want to get this from props or context
+        address: address, // You might want to get this from props or context
         aptid: apartment.id,
         checkInDate: selectedDates.start.toISOString(),
         checkOutDate: selectedDates.end.toISOString(),
@@ -73,14 +75,6 @@ const BookingForm = ({ apartment, selectedDates, onSubmit }) => {
         </div>
 
         <div className="flex justify-end space-x-3 mt-4">
-          <button
-            type="button"
-            onClick={() => window.history.back()}
-            className="px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-md"
-            disabled={isSubmitting}
-          >
-            Cancel
-          </button>
           <button
             type="submit"
             disabled={isSubmitting || !selectedDates.start || !selectedDates.end}

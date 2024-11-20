@@ -5,6 +5,7 @@ import axios from '../../api/axios';
 import Modal from '../Booking/Modal';
 import Calendar from '../Booking/Calender';
 import BookingForm from '../Booking/BookingForm';
+import { useAppKitAccount } from '@reown/appkit/react';
 
 const ApartmentMainInfo = ({ apartment }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,6 +14,7 @@ const ApartmentMainInfo = ({ apartment }) => {
   const [numGuests, setNumGuests] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const {address} = useAppKitAccount();
 
   // Fetch unavailable dates using axios
   useEffect(() => {
@@ -52,7 +54,7 @@ const ApartmentMainInfo = ({ apartment }) => {
     try {
       setIsLoading(true);
       const bookingRequest = {
-        address: "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+        address: address,
         aptid: apartment.id,
         checkInDate: selectedDates.start.toISOString(),
         checkOutDate: selectedDates.end.toISOString(),
@@ -178,18 +180,6 @@ const ApartmentMainInfo = ({ apartment }) => {
               disabled={isLoading}
             >
               Cancel
-            </button>
-            <button
-              onClick={() => handleBookingSubmit({ ...selectedDates })}
-              disabled={
-                !selectedDates.start || 
-                !selectedDates.end || 
-                isLoading || 
-                !validateDateRange(selectedDates.start, selectedDates.end)
-              }
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-500 hover:bg-blue-600 rounded-md disabled:bg-gray-300"
-            >
-              {isLoading ? 'Processing...' : 'Confirm Booking'}
             </button>
           </div>
         </div>
